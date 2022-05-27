@@ -1,0 +1,37 @@
+.container {
+ border: 2px solid black;
+  border-left-style: dashed;
+  border-top-style: dashed;
+  border-right-style: dashed;
+  border-bottom-style: dashed;
+ background: linear-gradient(#9198e5, #91bee5,#91e5be);
+ height: auto;
+ background-size: auto;
+}
+
+.container .text-center {
+text-align: center;
+font-family: 'Permanent Marker', cursive;
+font-size: xx-large;
+margin: 2%
+}
+
+.container .right {
+ text-align: center;
+ font-family: 'Permanent Marker', cursive;
+ font-size: x-large;
+margin: 2%
+}
+
+button {
+ font-family: 'Permanent Marker', cursive;
+ font-size: 30px;
+ border-radius: 15px;
+ margin: 2px;
+ padding: 1%
+}
+
+
+.controls {
+text-align: center;
+}
