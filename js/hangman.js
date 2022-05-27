@@ -28,7 +28,9 @@ let answer = "";
 let maxWrong = 7;
 let mistakes = 0;
 let guessed = [];
+let clickLetter = [];
 let wordStatus = null;
+
 
 const correctsound = new Audio('./sound/Correct-answer.mp3');
 const wrongsound = new Audio('./sound/Wrong-Clakson-Sound-Effect.mp3');
@@ -37,8 +39,21 @@ function randcount() {
   answer = country_names[Math.floor(Math.random() * country_names.length)];
 }
 
-function genlettter() {
-  let buttonsHTML = 'abcdefghijklmnopqrstuvwxyz'.split('').map(letter =>
+function guesscount() {
+  wordStatus = answer
+    .split("")
+    .map((letter) => (guessed.indexOf(letter) >= 0 ? letter : ' _ '))
+    .join("");
+
+  document.getElementById('wordSpotlight').innerHTML = wordStatus;
+}
+
+function collateerrors() {
+  document.getElementById('mistakes').innerHTML = mistakes;
+}
+
+function genletter() {
+  let buttonskey = 'abcdefghijklmnopqrstuvwxyz'.split('').map(letter =>
     `
       <button
         class="btn btn-lg btn-primary m-2"
@@ -49,24 +64,25 @@ function genlettter() {
       </button>
     `).join('');
 
-  document.getElementById('keyboard').innerHTML = buttonsHTML;
+  document.getElementById('keyboard').innerHTML = buttonskey;
 }
 
-function processguess(chosenLetter) {
-  guessed.indexOf(chosenLetter) === -1 ? guessed.push(chosenLetter) : null;
-  document.getElementById(chosenLetter).setAttribute('disabled', true);
+function processguess(clickLetter) {
+  guessed.indexOf(clickLetter) === -1 ? guessed.push(clickLetter) : null;
+  document.getElementById(clickLetter).setAttribute("disabled", true);
 
-  if (answer.indexOf(chosenLetter) >= 0) {
+  if (answer.indexOf(clickLetter) >= 0) {
     guesscount();
     checkwin();
     correctsound.play();
-  } else if (answer.indexOf(chosenLetter) === -1) {
+  } else if (answer.indexOf(clickLetter) === -1) {
     mistakes++;
     wrongsound.play();
     collateerrors();
     checkwinorlose();
     drawline();
   }
+ 
 }
 
 function drawline() {
@@ -86,29 +102,19 @@ function checkwinorlose() {
   }
 }
 
-function guesscount() {
-  wordStatus = answer.split('').map(letter => (guessed.indexOf(letter) >= 0 ? letter : " _ ")).join('');
-
-  document.getElementById('wordSpotlight').innerHTML = wordStatus;
-}
-
-function collateerrors() {
-  document.getElementById('mistakes').innerHTML = mistakes;
-}
-
 function reset() {
   mistakes = 0;
   guessed = [];
-  document.getElementById('hangmanPic').src = './images/0-1.png';
+  document.getElementById("hangmanPic").src = './images/0-1.png';
 
   randcount();
   guesscount();
   collateerrors();
-  genlettter();
+  genletter();
 }
 
-document.getElementById('maxWrong').innerHTML = maxWrong;
+document.getElementById("maxWrong").innerHTML = maxWrong;
 
 randcount();
-genlettter();
+genletter();
 guesscount();
